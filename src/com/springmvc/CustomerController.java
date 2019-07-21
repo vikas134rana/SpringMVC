@@ -10,23 +10,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/customer")
-public class CustomerController {@RequestMapping("/showForm")
-public String showForm(Model theModel) {
-	
-	theModel.addAttribute("customer", new Customer());
-	
-	return "customer_form";
-}
+public class CustomerController {
+	@RequestMapping("/showForm")
+	public String showForm(Model theModel) {
 
-@RequestMapping("/processForm")
-public String processForm(
-		@Valid @ModelAttribute("customer") Customer theCustomer,
-		BindingResult theBindingResult) {
-	
-	if (theBindingResult.hasErrors()) {
+		theModel.addAttribute("customer", new Customer());
+
 		return "customer_form";
 	}
-	else {
-		return "customer";
+
+	@RequestMapping("/processForm")
+	public String processForm(@Valid @ModelAttribute("customer") Customer theCustomer, BindingResult theBindingResult) {
+
+		System.out.println(theBindingResult);
+
+		if (theBindingResult.hasErrors()) {
+			return "customer_form";
+		} else {
+			return "customer";
+		}
 	}
-}}
+}
